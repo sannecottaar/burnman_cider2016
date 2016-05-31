@@ -18,7 +18,6 @@ import os, sys # Library used to interact with your operating system
 import numpy as np # Library used for general array
 import matplotlib.pyplot as plt # Library used for plotting
 from matplotlib import cm  # Library used for colormap
-import pickle # Library used to read in 3D seismic file
 
 
 # Import BurnMan
@@ -47,16 +46,15 @@ if step=='step1' or step=='step2':
     # load 3D seismic model into dictionary
     # This model contains 2562 equally spaced profiles of shear wave velocity for the
     # model of French and Romanowicz(2015) filtered up to spherical harmonic degree 18.
-    with open('SEMUCBWM1_Lmax18.PICKLE','rb') as handle:
-        seis3D = pickle.load(handle)
+    seis3D = np.load('SEMUCBWM1_Lmax18.npy').item()
+    print(seis3D.keys())
     
+    # plots one in ten profiles
+    for prof in range(0,len(seis3D['lons']),10):
+        plt.plot(seis3D['depths'],seis3D['dVs'][:,prof],'k',alpha=0.01)
     
-    # plots each profile
-    for prof in range(len(seis3D['lons'])):
-        plt.plot(seis3D['deps'],seis3D['dVs'][prof],'k',alpha=0.01)
-    
-    plt.plot(seis3D['deps'],np.max(seis3D['dVs'],axis=0),'k')
-    plt.plot(seis3D['deps'],np.min(seis3D['dVs'],axis=0),'k')
+    plt.plot(seis3D['depths'],np.max(seis3D['dVs'],axis=1),'k')
+    plt.plot(seis3D['depths'],np.min(seis3D['dVs'],axis=1),'k')
     plt.xlim([660.,2891.])
     plt.xlabel('depth (km)')
     plt.ylabel('dlnVs')
@@ -132,9 +130,11 @@ if step=='step2':
     deltaFe = np.arange(-0.21,0.2101,.06)
     colorsFe = [ cm.copper_r(x) for x in np.linspace(0.,1.,len(deltaFe)) ] # using the reversed copper scale
 
-for i, dFe in enumerate(deltaFe):
-    # Rough partition of Fe deviation in Perovskite and Ferropericalse
-    dFepv = 0.2* dFe
+
+
+    for i, dFe in enumerate(deltaFe):
+        # Rough partition of Fe deviation in Perovskite and Ferropericalse
+        dFepv = 0.2* dFe
         dFefp = 0.8* dFe
         # Perovksite solide solution
         frac_mg = 0.94 - dFepv

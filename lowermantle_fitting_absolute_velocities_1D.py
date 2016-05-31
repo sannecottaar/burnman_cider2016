@@ -19,7 +19,7 @@ import numpy as np # Library used for general array
 import matplotlib.pyplot as plt # Library used for plotting
 from matplotlib import cm  # Library used for colormap
 import pickle # Library used to read in 3D seismic file
-
+import writing_rock_to_mineosinput
 # Import BurnMan
 sys.path.insert(1, os.path.abspath('./burnman-0.9.0/')) # add path to burnman
 import burnman
@@ -154,6 +154,7 @@ if step == 'step2':
     # To use this include the line below.
     #temperature = burnman.geotherm.brown_shankland(pressure)
 
+
     print("Calculations are done for:")
     pyrolitic_mantle .debug_print()
 
@@ -161,6 +162,11 @@ if step == 'step2':
         ['v_p', 'v_s', 'density'], pressures, temperatures)
     chondritic_vp, chondritic_vs, chondritic_rho = chondritic_mantle.evaluate(
         ['v_p', 'v_s', 'density'], pressures, temperatures)
+
+
+    # writing mineos input!
+    writing_rock_to_mineosinput.write_mineos_input(pyrolitic_mantle, name = 'pyrolite')
+    writing_rock_to_mineosinput.write_mineos_input(chondritic_mantle, name = 'chondrite')
 
     # PLOTTING
 
