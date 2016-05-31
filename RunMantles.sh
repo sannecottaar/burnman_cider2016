@@ -4,7 +4,7 @@
 # Usage: RunMantles.sh model_name
 # Available model names for the practical are pyrolite & chondrite.
 
-mineosloc="/Users/jessica/work/bin/mineos/mineos-1.0.2/"
+mineosloc="./mineos-1.0.2/"
 
 if test "$#" != 1; then
 echo " Usage: RunMantles.sh model_name"
@@ -13,16 +13,16 @@ fi
 model=$1                # setup 1-D model name
 flg=0
 
-for f in  pyrolite chondrite
-do
-if test "$f" = $1; then
-flg=1
-fi
-done
+for f in  prem_noocean pyrolite chondrite
+  do
+   if test "$f" = $1; then
+	flg=1
+   fi
+  done
 
 if test "$flg" = 0; then
 echo "Model name $1 is wrong, allowed names are:"
-echo "pyrolite and chondrite"
+echo "prem_noocean pyrolite and chondrite"
 exit
 fi
 
