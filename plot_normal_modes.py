@@ -76,11 +76,13 @@ if plot == 'dispersion_curve':
     """
     Plots angular order vs frequency for the models given and for observations.
     """
+    plot_data = False
     for model_to_plot in models_to_plot:
         overtone_number, angular_order,frequency, inv_Q = read_mineos_output(model_to_plot,component)
-        plt.plot(angular_order,frequency, '.', MarkerSize=10, label = model_to_plot)
-    overtone_number, angular_order,frequency, error = read_data(component)
-    plt.plot(angular_order,frequency, '.k', MarkerSize=5, label = 'data')
+        plt.plot(angular_order,frequency, '.', markersize=10, label = model_to_plot)
+    if plot_data:
+        overtone_number, angular_order,frequency, error = read_data(component)
+        plt.plot(angular_order,frequency, 'dk', markersize=5, label = 'selected data')
     plt.legend()
     plt.xlabel('Angular order (l)')
     plt.ylabel('Frequency (mHz)')
@@ -91,7 +93,7 @@ if plot == 'quality_factor':
     """
     for model_to_plot in models_to_plot:
         overtone_number, angular_order,frequency, inv_Q = read_mineos_output(model_to_plot,component)
-        plt.plot(frequency, inv_Q, '.', MarkerSize=10, label = model_to_plot)
+        plt.plot(frequency, inv_Q, '.', markersize=10, label = model_to_plot)
     plt.legend()
     plt.ylabel('Inverse of quality factor (1000/Q)')
     plt.xlabel('Frequency (mHz)')
@@ -119,7 +121,7 @@ if plot == 'compare_with_data':
                 if len(ind)>0:
                     l=l+1
                     plotind = int(overtone_number_syn[i]) - nmin
-                    axarr[plotind].plot(angular_order_syn[i], frequency_syn[i]-frequency_ref[ind[0]],colors[m],MarkerSize=10, label=model_to_plot if l == 1 else "")
+                    axarr[plotind].plot(angular_order_syn[i], frequency_syn[i]-frequency_ref[ind[0]],colors[m],markersize=10, label=model_to_plot if l == 1 else "")
                     axarr[plotind].plot([0, lmax],[0,0], '--k')
                     axarr[plotind].text(22,0.04, 'n = ' +str(int(overtone_number_syn[i])))
         axarr[0].legend(bbox_to_anchor=(.8, 1.75))
