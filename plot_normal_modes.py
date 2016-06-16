@@ -100,8 +100,8 @@ if plot == 'compare_with_data':
     """
     Plots differences in eigenfrequency between different models and the observations for different values of overtone number and angular order
     """
-    nmin=3  # minimum overtone number to be plotted
-    nmax=14  # maximum overtone number to be plotted
+    nmin=0  # minimum overtone number to be plotted
+    nmax=8 # maximum overtone number to be plotted
     lmax=25 # maximum angular order to be plotted
     colors=['.r','.b','.g','.c'] # colors to use for the different models
     f, axarr = plt.subplots(nmax+1-nmin, sharex=True,sharey=True,figsize=(7,8))
@@ -111,14 +111,15 @@ if plot == 'compare_with_data':
     for m, model_to_plot in enumerate(models_to_plot):
         # Read in computed values
         overtone_number_syn, angular_order_syn,frequency_syn, inv_Q_syn = read_mineos_output(model_to_plot,component)
-
+        l=0
         # Loop through and plot if there is an observed value
         for i in range(len(overtone_number_syn)):
             if overtone_number_syn[i] >= nmin and overtone_number_syn[i] <= nmax and angular_order_syn[i] <= lmax :
                 ind = [ n for n in range(len(overtone_number_ref)) if (overtone_number_ref[n]== overtone_number_syn[i] and angular_order_ref[n] == angular_order_syn[i])]
                 if len(ind)>0:
+                    l=l+1
                     plotind = int(overtone_number_syn[i]) - nmin
-                    axarr[plotind].plot(angular_order_syn[i], frequency_syn[i]-frequency_ref[ind[0]],colors[m],MarkerSize=10, label=model_to_plot if plotind == 0 else "")
+                    axarr[plotind].plot(angular_order_syn[i], frequency_syn[i]-frequency_ref[ind[0]],colors[m],MarkerSize=10, label=model_to_plot if l == 1 else "")
                     axarr[plotind].plot([0, lmax],[0,0], '--k')
                     axarr[plotind].text(22,0.04, 'n = ' +str(int(overtone_number_syn[i])))
         axarr[0].legend(bbox_to_anchor=(.8, 1.75))
