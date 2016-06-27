@@ -1,0 +1,17 @@
+Readme for the REM data.
+JCEI, June 2016.
+
+The data here are all taken from the REM webpage: http://igppweb.ucsd.edu/~gabi/rem.dir/surface/rem.surf.html and therfore do not contain every recent observation made but have been provided by a number of groups. For the purposes of this tutorial, we just want to compare the calculated frequencies to the data. Note that we will compare the REM data with spherical, non-rotating, no-cross-coupling estimates for 1D Earth models. Data are accompanied by error estimates where given. Many other data selection choices could be made.
+
+The data that have been selected are as follows:
+
+#################
+For the radial modes, data are published values from He & Tromp (1996) where given, and otherwise from unpublished singlet stripping measurements by Masters.
+
+#################
+For the toroidal modes, overtone data are Resovsky & Ritzwoller (1998) where possible, then Masters & Widmer (1995, one entry has error estimate corrected), and then  Widmer, Zurn & Masters, 1992. For the fundamental data, Roult, Romanowicz & Montagner (1998) where possible, then Laske & Masters 1996, then Ekstrom, Tromp & Larson, 1997. 
+
+#################
+For the spheroidal fundamental data, Roult, Romanowicz & Montagner (1998) where possible, then Ekstrom, Tromp & Larson, 1997. For the overtones, Resovsky & Ritzwoller (1998) where possible, then Masters & Widmer (1995)  then He & Tromp, then Um (unpublished? unsure) and then Ritzwoller, Masters and Gilbert (1986).
+
+Data with f>10mHz have been removed.
