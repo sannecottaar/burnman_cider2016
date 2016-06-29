@@ -41,8 +41,8 @@ def read_mineos_output(model, component):
     for line in datalines:
         val = line.split()
         if (val[0] != '#'):
-            overtone_number.append(float(val[0]))
-            angular_order.append(float(val[2]))
+            overtone_number.append(int(val[0]))
+            angular_order.append(int(val[2]))
             frequency.append(float(val[3]))
             inv_Q.append((1000./float(val[4])))
     return np.array(overtone_number),np.array(angular_order), np.array(frequency), np.array(inv_Q)
@@ -59,8 +59,8 @@ def read_data(component):
     for line in datalines:
         val = line.split()
         if (val[0] != '#'):
-            overtone_number.append(float(val[0]))
-            angular_order.append(float(val[2]))
+            overtone_number.append(int(val[0]))
+            angular_order.append(int(val[2]))
             frequency.append(float(val[3]))
             try:
                 microerror.append((float(val[4])))
@@ -122,13 +122,15 @@ if plot == 'compare_with_data':
                     l=l+1
                     plotind = int(overtone_number_syn[i]) - nmin
                     axarr[plotind].plot(angular_order_syn[i], frequency_syn[i]-frequency_ref[ind[0]],colors[m],markersize=10, label=model_to_plot if l == 1 else "")
-                    axarr[plotind].plot([0, lmax],[0,0], '--k')
+                    axarr[plotind].plot([0-0.2, lmax+0.2],[0,0], '--k')
                     axarr[plotind].text(22,0.04, 'n = ' +str(int(overtone_number_syn[i])))
         axarr[0].legend(bbox_to_anchor=(.8, 1.75))
         axarr[nmax-nmin].set_xlabel('Angular order (l)')
         axarr[round((nmax-nmin)/2.)].set_ylabel('Frequency difference (mHz)')
         plt.ylim([-0.08, 0.08])
+        plt.xlim([-0.2, lmax+0.2])
         plt.gca().set_yticks([-0.05,0,0.05])
+
 
 
 plt.show()
