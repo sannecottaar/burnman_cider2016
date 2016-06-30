@@ -10,20 +10,13 @@ if test "$#" != 1; then
 echo " Usage: RunMantles.sh model_name"
 exit
 fi
-model=$1                # setup 1-D model name
-flg=0
 
-for f in  prem_noocean pyrolite chondrite
-  do
-   if test "$f" = $1; then
-	flg=1
-   fi
-  done
+model=$1
 
-if test "$flg" = 0; then
-echo "Model name $1 is wrong, allowed names are:"
-echo "prem_noocean pyrolite and chondrite"
-exit
+if [  ! -f mineos_${model}.txt ];
+then
+    echo Model file  mineos_${model}.txt does not exist. Maybe try using prem_noocean, pyrolite or chondrite as the model names or check if step2 worked properly.
+    exit
 fi
 
 #Remove the files this routine will make
